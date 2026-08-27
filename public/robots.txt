@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /api/
+Disallow: /storage/private/
+Disallow: /*?*utm_
+Disallow: /search?
+
+Sitemap: https://rikoardianto.web.id/sitemap.xml

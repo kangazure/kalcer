@@ -1,0 +1,54 @@
+# =====================================================================
+# Supabase CLI Configuration — PT Jaringan Teknologi Sejahtera
+# Dipakai untuk development lokal via `supabase start` / `supabase db push`
+# =====================================================================
+project_id = "ptjts-website"
+
+[api]
+enabled = true
+port = 54321
+schemas = ["public", "storage", "graphql_public"]
+extra_search_path = ["public"]
+max_rows = 1000
+
+[db]
+port = 54322
+shadow_port = 54320
+major_version = 15
+
+[db.pooler]
+enabled = true
+port = 54329
+pool_mode = "transaction"
+default_pool_size = 20
+max_client_conn = 100
+
+[studio]
+enabled = true
+port = 54323
+
+[auth]
+enabled = true
+site_url = "https://ptjts.id"
+additional_redirect_urls = ["https://ptjts.id/auth/callback", "http://localhost:8000/auth/callback"]
+jwt_expiry = 3600
+refresh_token_rotation_enabled = true
+enable_signup = false # registrasi admin hanya melalui invite, bukan self sign-up publik
+
+[auth.email]
+enable_signup = false
+enable_confirmations = true
+secure_password_change = true
+
+[storage]
+enabled = true
+file_size_limit = "10MiB"
+
+[realtime]
+enabled = true
+
+[edge_functions]
+enabled = true
+
+[analytics]
+enabled = false

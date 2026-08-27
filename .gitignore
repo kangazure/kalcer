@@ -1,0 +1,64 @@
+# ===== Dependency & Package Manager =====
+/node_modules
+/vendor
+npm-debug.log
+yarn-error.log
+package-lock.json.bak
+
+# ===== Environment & Secrets =====
+.env
+.env.backup
+.env.production
+.env.*.local
+.phpunit.result.cache
+Homestead.json
+Homestead.yaml
+auth.json
+
+# ===== Laravel Framework =====
+/public/build
+/public/hot
+/public/storage
+/storage/*.key
+/storage/app/public/*
+!/storage/app/public/.gitkeep
+/storage/framework/cache/*
+!/storage/framework/cache/.gitkeep
+/storage/framework/sessions/*
+!/storage/framework/sessions/.gitkeep
+/storage/framework/testing/*
+!/storage/framework/testing/.gitkeep
+/storage/framework/views/*
+!/storage/framework/views/.gitkeep
+/storage/logs/*
+!/storage/logs/.gitkeep
+/bootstrap/cache/*.php
+
+# ===== IDE & Editor =====
+.idea
+.vscode
+*.sublime-project
+*.sublime-workspace
+.fleet
+.nova
+.zed
+
+# ===== OS Files =====
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# ===== Build Artifacts =====
+/public/build
+*.log
+
+# ===== Docker (untuk local override, bukan Dockerfile-nya sendiri) =====
+docker-compose.override.yml
+
+# ===== Testing =====
+/coverage
+.phpunit.cache
+
+# ===== Misc =====
+*.orig
+*.rej
