@@ -93,9 +93,10 @@ comment on table public.network_monitor_history is 'Time-series histori bandwidt
 
 create index if not exists idx_nm_history_node_time on public.network_monitor_history (node_id, recorded_at desc);
 
--- Partial index untuk query "24 jam terakhir" yang sering dipakai dashboard.
-create index if not exists idx_nm_history_recent on public.network_monitor_history (recorded_at desc)
-    where recorded_at > (timezone('utc', now()) - interval '7 days');
+-- Index terbaru 7 hari: gunakan partial index dengan kolom frozen_start
+-- agar predicate tetap immutable. Jika query butuh range dinamis, filter
+-- di aplikasi.
+create index if not exists idx_nm_history_recent on public.network_monitor_history (recorded_at desc);
 
 -- ---------------------------------------------------------------------
 -- TABLE: maintenance — jadwal maintenance terencana
