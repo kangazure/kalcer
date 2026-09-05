@@ -28,7 +28,8 @@ RUN apk add --no-cache \
         nginx supervisor postgresql-dev libzip-dev libpng-dev \
         oniguruma-dev curl-dev freetype-dev libjpeg-turbo-dev \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
-    && docker-php-ext-install pdo pdo_pgsql pgsql mbstring curl gd zip bcmath opcache
+    && docker-php-ext-install pdo pdo_pgsql pgsql mbstring curl gd zip bcmath opcache \
+    && docker-php-ext-install ctype iconv fileinfo
 
 WORKDIR /var/www/html
 
