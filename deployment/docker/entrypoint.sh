@@ -3,6 +3,16 @@ set -e
 
 cd /var/www/html
 
+# =================================================================
+# Set safe defaults for cache/session/queue so the app can boot
+# even if Dokploy still sends Redis-based env vars from an old config.
+# Dokploy's explicit env vars will override these if set.
+# =================================================================
+: "${CACHE_STORE:=file}"
+: "${SESSION_DRIVER:=file}"
+: "${QUEUE_CONNECTION:=sync}"
+: "${BROADCAST_CONNECTION:=log}"
+
 # Generate APP_KEY jika belum ada (aman dijalankan berulang, tidak akan
 # menimpa key yang sudah ada di .env produksi)
 if [ -z "$APP_KEY" ]; then
