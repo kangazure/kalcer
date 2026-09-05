@@ -23,6 +23,7 @@ class User extends BaseModel implements AuthenticatableContract, JWTSubject
         'uuid', 'auth_user_id', 'role_id', 'name', 'email', 'phone',
         'avatar_url', 'bio', 'position', 'status', 'email_verified_at',
         'last_login_at', 'last_login_ip', 'two_factor_enabled', 'created_by',
+        'password',
     ];
 
     protected $hidden = [
