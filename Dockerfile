@@ -1,5 +1,5 @@
 # =====================================================================
-# Dockerfile — PT Jaringan Teknologi Sejahtera (JTS)
+# Dockerfile â?" PT Jaringan Teknologi Sejahtera (JTS)
 # Multi-stage build: compile assets -> install PHP deps -> runtime
 # =====================================================================
 
@@ -22,14 +22,17 @@ COPY . .
 RUN composer dump-autoload --optimize --no-dev
 
 # ---- Stage 3: Runtime image ----
-FROM php:8.3-fpm-alpine
+FROM php:8.4-fpm-alpine
 
 RUN apk add --no-cache \
         nginx supervisor postgresql-dev libzip-dev libpng-dev \
         oniguruma-dev curl-dev freetype-dev libjpeg-turbo-dev \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
-    && docker-php-ext-install pdo pdo_pgsql pgsql mbstring curl gd zip bcmath opcache \
-    && docker-php-ext-install ctype iconv fileinfo
+    && docker-php-ext-install pdo pdo_pgsql pgsql mbstring curl gd zip bcmath opcache
+
+# iconv sudah built-in di Alpine PHP image (musl libc), tidak perlu compile ulang.
+# Untuk Alpine: gunakan apk add php*-ext-name untuk extension tambahan.
+RUN apk add --no-cache php-ctype php-fileinfo
 
 WORKDIR /var/www/html
 
