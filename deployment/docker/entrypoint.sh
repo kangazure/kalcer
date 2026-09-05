@@ -1,12 +1,11 @@
 #!/bin/sh
 set -e
 
-cd /var/www/html
+cd /app
 
 # =================================================================
 # Set safe defaults for cache/session/queue so the app can boot
 # even if Dokploy still sends Redis-based env vars from an old config.
-# Dokploy's explicit env vars will override these if set.
 # =================================================================
 : "${CACHE_STORE:=file}"
 : "${SESSION_DRIVER:=file}"
@@ -26,12 +25,11 @@ php artisan config:cache || true
 php artisan route:cache || true
 php artisan view:cache || true
 
-# Jalankan migration otomatis saat container start (opsional, bisa
-# dimatikan dengan set RUN_MIGRATIONS=false di environment Dokploy)
+# Jalankan migration otomatis saat container start
 if [ "${RUN_MIGRATIONS:-true}" = "true" ]; then
     echo "[entrypoint] Menjalankan migration..."
     php artisan migrate --force || echo "[entrypoint] Migration gagal/dilewati, cek koneksi database."
 fi
 
-echo "[entrypoint] Starting supervisord (nginx + php-fpm + horizon + scheduler)..."
+echo "[entrypoint] Starting supervisord (nginx + php-fpm)..."
 exec supervisord -c /etc/supervisor/conf.d/supervisord.conf

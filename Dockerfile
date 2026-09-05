@@ -30,22 +30,19 @@ RUN apk add --no-cache \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install pdo pdo_pgsql pgsql mbstring curl gd zip bcmath opcache
 
-# iconv sudah built-in di Alpine PHP image (musl libc), tidak perlu compile ulang.
-# Untuk Alpine: gunakan apk add php*-ext-name untuk extension tambahan.
-RUN apk add --no-cache php-ctype php-fileinfo
+# Dokploy expects app at /app — do not change this path
+WORKDIR /app
 
-WORKDIR /var/www/html
-
-COPY --from=vendor /app /var/www/html
-COPY --from=frontend /app/public/build /var/www/html/public/build
+COPY --from=vendor /app /app
+COPY --from=frontend /app/public/build /app/public/build
 
 COPY deployment/docker/nginx.conf /etc/nginx/nginx.conf
 COPY deployment/docker/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 COPY deployment/docker/entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
-RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache \
-    && chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
+RUN chown -R www-data:www-data /app/storage /app/bootstrap/cache \
+    && chmod -R 775 /app/storage /app/bootstrap/cache
 
 EXPOSE 80
 
